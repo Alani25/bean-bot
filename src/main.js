@@ -368,40 +368,33 @@ client.on('interactionCreate', async (interaction) => {
         // code
         // javascript
         let code = interaction.options.getString("javascript");
-
-        let messageContent = `evaling:\n\`\`\`javascript\n${code}\n\`\`\`\n`;
-
         await interaction.deferReply()
-        await interaction.editReply(messageContent + loadingMessage);
-
-
+        await interaction.editReply(`evaling:\n\`\`\`javascript\n${code}\n\`\`\`\n${loadingMessage}`);
+        let results="";
         try {
-
-        } catch (err) {
-
+            if(code.includes("env")||code.toLowerCase().includes("token"))
+                results = "// haha good try"
+             results = eval(code);
+        } catch (err){
+            results = err;
         }
+        interaction.editReply(`evaling:\n\`\`\`javascript\n${code}\n\`\`\`\n`+`Results:\n\`\`\`javascript\n${JSON.stringify(results)}\n\`\`\``);
     }
 
+    // DICE ROLL
     if(interaction.commandName == "roll"){
-
         let num = interaction.options.getInteger("sides") || 6;
-
         await interaction.deferReply()
         // await interaction.editReply(loadingMessage);
-        
         let ans = roll(num);
-        interaction.editReply(`# 🎲 Rolled a ${num} sided die, and got a ${ans}! 🎲`);
-
+        interaction.editReply(`# 🎲 ${interaction.user} rolled a ${num} sided die & got a ${ans}! 🎲`);
     }
 
+    // flipCoin
     if(interaction.commandName == "flip"){
-        // flipCoin
         await interaction.deferReply();
-
-        // 
-
         let ans = flipCoin();
-        interaction.editReply(`${interaction.user} flipped a coin and got ${ans}`);
+        interaction.editReply(`# 🪙 ${interaction.user} flipped & got ${ans.toUpperCase()} 🪙`);
     }
 
 });
