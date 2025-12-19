@@ -1,0 +1,65 @@
+[
+  {
+    "command": "player1 kills player2",
+    "player": [
+      "player1"
+    ],
+    "kills": [
+      "player2"
+    ],
+    "mode": [
+      "day",
+      "night"
+    ]
+  },
+  {
+    "command": "player1 cries himself to sleep",
+    "player": [
+      "player1"
+    ],
+    "kills": [],
+    "mode": [
+      "day",
+      "night"
+    ]
+  },
+  {
+    "command": "player1, player2, and player3 decide to hold a truce",
+    "player": [
+      "player1",
+      "player2",
+      "player3"
+    ],
+    "kills": [],
+    "mode": [
+      "day",
+      "night"
+    ]
+  },
+  {
+    "command": "player1 and player2 try to ambush player3— little did they know player3 had a Barrett MK22 and kills them both",
+    "player": [
+      "player3"
+    ],
+    "kills": [
+      "player1",
+      "player2"
+    ],
+    "mode": [
+      "day",
+      "night"
+    ]
+  },
+  {
+    "command": "player1 slaps player2",
+    "player": [
+      "player1",
+      "player2"
+    ],
+    "kills": [],
+    "mode": [
+      "day",
+      "night"
+    ]
+  }
+]

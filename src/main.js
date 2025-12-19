@@ -28,11 +28,14 @@ require('dotenv').config(); // env file
 const { ApplicationCommand } = require('discord.js');
 const { REST, Routes, ApplicationCommandOptionType, Application, Client, GatewayIntentBits, ActivityType, ActionRowBuilder, ButtonBuilder, ButtonStyle, StringSelectMenuBuilder, EmbedBuilder, quote, AttachmentBuilder } = require("discord.js");
 const cron = require("node-cron");
+const fs = require("fs");
 
 
 // global variables
 let trustedChannelID = "673923554856927284"; // TODO make sure we got a trusted channel
 let loadingMessage = `\n <a:loading:1451198424236953683> Loading . . . `;
+let commandCycle = 0;
+let maxCycle = 0;
 
 // Init discord bot perms
 const client = new Client({
@@ -43,6 +46,20 @@ const client = new Client({
         GatewayIntentBits.MessageContent // To read the content of messages
     ]
 });
+
+// saved file system
+const COMMANDS_FILE = "./storage/beangames-commands.json"
+
+// read file
+function readFile(FILE) {
+    if (!fs.existsSync(FILE)) return {}
+    return JSON.parse(fs.readFileSync(FILE, "utf8"))
+}
+// save to file
+function writeFile(data, FILE){
+    fs.writeFileSync(FILE, JSON.stringify(data, null, 2));
+}
+
 
 // quick functions, random num gen
 let roll = (num)=> num-Math.ceil(Math.random()*num)+1;
@@ -83,6 +100,63 @@ const initSlashCommands = async function (guildID) {
         },{
             name: "flip",
             description: "flip a coin!",
+        },{
+            name: "beangames",
+            description: "Begin the BEAN GAMES!!",
+            options: [{
+                name: "members",
+                description: "How many members will partake in the Bean Games",
+                type: ApplicationCommandOptionType.Integer,
+                required: true
+            }]
+        },{
+            name: "beangames-commands",
+            description: "View & manage all current commands in the bean games",
+            options: [{
+                name: "command-number",
+                description: "Quickly select a command by index number",
+                type: ApplicationCommandOptionType.Integer,
+                required: false
+            }]
+        },{
+            name: "add-beangames-command",
+            description: "Select to add new BeanGames command",
+            options: [{
+                name: "command",
+                description: "Describe the command; make sure to use player# as placeholder",
+                type: ApplicationCommandOptionType.String,
+                required: true
+            },{
+                name: "number-of-players",
+                description: "Number of players command includes (highest player# used)",
+                type: ApplicationCommandOptionType.Integer,
+                required: true
+            },{
+                name: "first-killed-player",
+                description: "Number of first player killed (if any)",
+                type: ApplicationCommandOptionType.Integer,
+                required: false
+            },{
+                name: "second-killed-player",
+                description: "Number of second player killed (if any)",
+                type: ApplicationCommandOptionType.Integer,
+                required: false
+            },{
+                name: "third-killed-player",
+                description: "Number of third player killed (if any)",
+                type: ApplicationCommandOptionType.Integer,
+                required: false
+            },{
+                name: "command-mode",
+                description: "Under which mode is this command possible? (ex: \"day\" or \"night\")",
+                type: ApplicationCommandOptionType.String,
+                required: false
+            },{
+                name: "command-mode-2",
+                description: "Under which mode is this command possible? (ex: \"day\" or \"night\")",
+                type: ApplicationCommandOptionType.String,
+                required: false
+            }]
         }
 
     ];
@@ -109,10 +183,10 @@ const initSlashCommands = async function (guildID) {
 // START SERVER
 client.on("clientReady", (c) => {
     console.info(`
-        /--/    /====== ||\\ \\\\\\\\  ||
-        /-/     \\______ ||\\\\ \\\\ \\ ||
-        /_-  -\\  \\----- ||_\\\\ \\\\ \\||
-        /_-_-_-\\  \\==== ||  \\\\ \\\\ \\|
+        |==/   /====== ||\\ \\\\\\\\  ||
+        | /    \\______ ||\\\\ \\\\ \\ ||
+        | ====\\ \\----- ||_\\\\ \\\\ \\||
+        |_=___=\\ \\==== ||  \\\\ \\\\ \\|
 
       ${c.user.tag} is alive!
     `);
@@ -395,6 +469,137 @@ client.on('interactionCreate', async (interaction) => {
         await interaction.deferReply();
         let ans = flipCoin();
         interaction.editReply(`# 🪙 ${interaction.user} flipped & got ${ans.toUpperCase()} 🪙`);
+    }
+
+    // BEAN GAMES
+    if(interaction.commandName == "beangames"){
+        await interaction.deferReply();
+        // 
+
+    }
+
+
+
+    // BEAN GAMES COMMANDS
+    if (interaction.isButton()) {
+        // let commandCycle = {row: 0, page: 0};
+        switch(interaction.customId){
+            case "button-beangames-right":
+                commandCycle++;
+                if(commandCycle>maxCycle)
+                    commandCycle=0;
+                break;
+            case "button-beangames-delete":
+                if(maxCycle===1)
+                    break;
+                var newData = await readFile(COMMANDS_FILE);
+                newData.splice(commandCycle,1);
+                await writeFile(newData,COMMANDS_FILE);
+            case "button-beangames-left":
+                commandCycle--;
+                if(commandCycle<0)
+                    commandCycle = maxCycle;
+                break;
+        }
+
+    }
+
+    if(interaction.commandName == "beangames-commands" || interaction.customId && interaction.customId.includes("button-beangames-")){
+        if(interaction.isButton())
+            await interaction.deferUpdate()
+        else 
+            await interaction.deferReply();
+
+        var data = await readFile(COMMANDS_FILE);
+        maxCycle = data.length-1;
+        // commandCycle =  interaction.options.getInteger("command-number");
+
+        const row = new ActionRowBuilder().addComponents(
+            new ButtonBuilder()
+            .setCustomId("button-beangames-left")
+            .setLabel("<")
+            .setStyle(ButtonStyle.Primary),
+
+            new ButtonBuilder()
+            .setCustomId("button-beangames-right")
+            .setLabel(">")
+            .setStyle(ButtonStyle.Primary),
+
+            new ButtonBuilder()
+            .setCustomId("button-beangames-delete")
+            .setLabel("x")
+            .setStyle(ButtonStyle.Danger)
+        )
+
+
+        var contentMessage = "";
+        data.forEach((val, index)=>{
+            var iSel = commandCycle == index?"> **":"";
+            // (val.players.concat(val.kills)).forEach((v)=> commandMessage.replaceAll(v,`\`${v}\``));
+            contentMessage = `${contentMessage}\n${iSel}Command ${index}:\n${iSel}${val.command}\n\`\`\`\n${JSON.stringify(val)}\n\`\`\`\n`
+        })
+
+        // {"command":"player1 kills player2","players":[""],"kills":[""]}
+        const embed = new EmbedBuilder()
+                        .setTitle("BeanGames Commands")
+                        .setDescription(contentMessage)
+                        .setColor("#BC6105");
+
+        await interaction.editReply({
+            // content: contentMessage,
+            embeds: [embed],
+            components: [row]
+        });
+    }
+
+
+
+
+    // ADDING BEANGAMES COMMAND
+    if(interaction.commandName == "add-beangames-command"){
+        await interaction.deferReply();
+        let contentMessage = "";
+        var data = await readFile(COMMANDS_FILE);
+        var newData = {
+            "command": interaction.options.getString("command"),
+            "player": [],
+            "kills": [],
+            "mode": ["day","night"]
+        };
+        // set players
+        let pn = interaction.options.getInteger("number-of-players") || 0;
+        for(var i=1;i<=pn;i++)
+            newData.player.push(`player${i}`);
+
+        // define killed players
+        ["first-killed-player","second-killed-player","third-killed-player"].forEach((val)=>{
+            let nn = interaction.options.getInteger(val) || 0;
+            if(nn)
+                newData.kills.push(`player${nn}`);
+        });
+
+        // define mode
+        let mode1 = interaction.options.getString("command-mode") || 0;
+        let mode2 = interaction.options.getString("command-mode-2") || 0;
+        if(mode1 || mode2)
+            newData.mode = [mode1, mode2];
+
+        // creating new data
+        data.push(newData)
+        await writeFile(data,COMMANDS_FILE);
+
+        contentMessage = `Added in new command:\n\`\`\`javascript\n${JSON.stringify(newData)}\n\`\`\`\n-# See \`/beangames-commands\` to view all current commands`
+
+        const embed = new EmbedBuilder()
+                        .setTitle(`Bean Games NEW Command #${data.length-1}`)
+                        .setDescription(contentMessage)
+                        .setColor("#BC6105");
+
+        await interaction.editReply({
+            // content: contentMessage,
+            embeds: [embed]
+        });
+
     }
 
 });
