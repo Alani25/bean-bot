@@ -61,5 +61,18 @@
       "day",
       "night"
     ]
+  },
+  {
+    "command": "player1 drowns",
+    "player": [
+      "player1"
+    ],
+    "kills": [
+      "player1"
+    ],
+    "mode": [
+      "day",
+      "night"
+    ]
   }
 ]

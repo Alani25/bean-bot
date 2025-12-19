@@ -258,7 +258,7 @@ const unallowedWords = [
     'prn'
 ];
 const unallowedTerms = [
-    'nigger','porn','sex'
+    'porn','sex'
 ];
 function moderationAlgo(text,author){
     spamTrack.push(author);
@@ -374,6 +374,8 @@ client.on('messageCreate', async (message) => {
     // tell admin/ moderators apart from regular members
     const member = await message.guild.members.fetch(user.id)
     const isAdmin = (member.permissions.has('Administrator') || member.permissions.has('ManageMessages'));
+    const roleHardRShame = message.guild.roles.cache.find(r => r.name.toLowerCase().includes("hard r"));
+
 
     // ignore if it's a message we send (no need for dog tail chase)
     if(message.author.id == "1450980085581746238")
@@ -418,11 +420,21 @@ client.on('messageCreate', async (message) => {
 
 
 
-    // simple hello :D
+    // // simple hello :D
     // if (text === "hello" || text === "hi") {
-    //     send("Hey there!");
+    //     // send("Hey there!");
     //     send(`How are you ${user}`)
     // }
+
+    // 
+    if(text.includes("nigger") && roleHardRShame){
+        if (!member.roles.cache.has(roleHardRShame.id)){
+            await member.roles.add(roleHardRShame);
+            send(`YO YO YO ${user} *chill!*\nYou've been given the ${roleHardRShame} for that bro`);
+        }else
+            send(`yo ${user} WASSUP MY N—\n-# note i am black so im allowed to say it n🥚a`);
+    }
+
 
 })
 
