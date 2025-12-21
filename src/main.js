@@ -384,24 +384,24 @@ client.on('messageCreate', async (message) => {
     // await send(message.author.id);
     
     
-    // MODERATION STEPS
-    let modCheck = moderationAlgo(text,message.author.id);
-    console.log(modCheck)
-    if(!modCheck.safe){
-        await message.reply(
-            `wooooah !\nYou've been muted for ${modCheck.duration} minutes for \n${modCheck.reason.join("\n")}`
-        );
-        if(isAdmin)
-            send("You're lucky you got perms")
-        else{ // TODO: make sure we have the right permissions to mute people, ignore for admins, delete message
-            member.timeout(minToMS(modCheck.duration), modCheck.reason.join(", ")); 
-            sendReport(message.guild,
-                `# User ${user} muted for ${modCheck.duration} minutes\n**Reason:**\n${modCheck.reason.join("\n")}\n\n***Last message send:***\n\`\`\`${message.content}\`\`\``
-            )
-            await message.delete();
-            return;
-        }
-    }
+    // // MODERATION STEPS
+    // let modCheck = moderationAlgo(text,message.author.id);
+    // console.log(modCheck)
+    // if(!modCheck.safe){
+    //     await message.reply(
+    //         `wooooah !\nYou've been muted for ${modCheck.duration} minutes for \n${modCheck.reason.join("\n")}`
+    //     );
+    //     if(isAdmin)
+    //         send("You're lucky you got perms")
+    //     else{ // TODO: make sure we have the right permissions to mute people, ignore for admins, delete message
+    //         member.timeout(minToMS(modCheck.duration), modCheck.reason.join(", ")); 
+    //         sendReport(message.guild,
+    //             `# User ${user} muted for ${modCheck.duration} minutes\n**Reason:**\n${modCheck.reason.join("\n")}\n\n***Last message send:***\n\`\`\`${message.content}\`\`\``
+    //         )
+    //         await message.delete();
+    //         return;
+    //     }
+    // }
 
 
     // initializing slash commands
@@ -426,13 +426,65 @@ client.on('messageCreate', async (message) => {
     //     send(`How are you ${user}`)
     // }
 
-    // 
-    if(text.includes("nigger") && roleHardRShame){
+    // HARD R SHAME
+    if((text.includes("nigger") || text.includes("nga")) && roleHardRShame){
         if (!member.roles.cache.has(roleHardRShame.id)){
             await member.roles.add(roleHardRShame);
-            send(`YO YO YO ${user} *chill!*\nYou've been given the ${roleHardRShame} for that bro`);
+            send(`YO YO YO ${user} *chill!*\nYou've been given the \`Hard R Shame role\` for that bro`);
         }else
             send(`yo ${user} WASSUP MY N—\n-# note i am black so im allowed to say it n🥚a`);
+    }
+
+
+
+    // COMMANDS
+    if (text.includes("slap ")) {
+        const slapGIFS = [ // slap GIFs
+            "https://media.tenor.com/zXqvIewp3ToAAAAd/asobi-asobase.gif",
+            "https://media.tenor.com/Ws6Dm1ZW_vMAAAAd/girl-slap.gif",
+            "https://media.tenor.com/X2WGK2fbenEAAAAd/peak.gif",
+            "https://media.tenor.com/XiYuU9h44-AAAAAd/anime-slap-mad.gif",
+            "https://media.tenor.com/68_5cN3wpJcAAAAd/slap-anime-girl.gif",
+            "https://media.tenor.com/wOCOTBGZJyEAAAAd/chikku-neesan-girl-hit-wall.gif",
+            "https://media.tenor.com/eU5H6GbVjrcAAAAd/slap-jjk.gif",
+            "https://media.tenor.com/cpWuWnOU64MAAAAd/bofetada.gif",
+            "https://media.tenor.com/HTHoXnBc400AAAAd/in-your-face-slap.gif",
+            "https://media.tenor.com/7xFcP1KWjY0AAAAd/no.gif",
+            "https://media.tenor.com/nVvUhW4FBxcAAAAd/slap.gif",
+            "https://media.tenor.com/sacuMyU4lkwAAAAd/anime-girl-anime.gif"
+
+        ];
+
+        const gif = slapGIFS[Math.floor(Math.random() * slapGIFS.length)];
+        const embed = new EmbedBuilder()
+        .setTitle(`${user.displayName.toUpperCase()} SLAPPED ${text.split("slap")[1].toUpperCase()}`)
+        .setDescription("oof that looks like it hurt :0")
+        .setColor("#BC6105")
+        .setImage(gif)
+    
+        await message.channel.send({ embeds: [embed],allowedMentions: { users: [message.author.id] } })
+    }
+
+    // COMMANDS
+    if (text.includes("punch ")) {
+        const punchGIFS = [ // slap GIFs
+            "https://media.tenor.com/6a42QlkVsCEAAAAd/anime-punch.gif",
+            "https://media.tenor.com/gmvdv-e1EhcAAAAd/weliton-amogos.gif",
+            "https://media.tenor.com/UH8Jnl1W3CYAAAAd/anime-punch-anime.gif",
+            "https://media.tenor.com/p_mMicg1pgUAAAAd/anya-forger-damian-spy-x-family.gif",
+            "https://media.tenor.com/o8RbiF5-9dYAAAAd/killua-hxh.gif",
+            "https://media.tenor.com/ccdazTROjecAAAAd/one-punch-man-saitama.gif",
+
+        ];
+
+        const gif = punchGIFS[Math.floor(Math.random() * punchGIFS.length)];
+        const embed = new EmbedBuilder()
+        .setTitle(`${user.displayName.toUpperCase()} PUNCHED ${text.split("punch")[1].toUpperCase()}`)
+        .setDescription("what did bro do to deserve this 🫣")
+        .setColor("#BC6105")
+        .setImage(gif)
+    
+        await message.channel.send({ embeds: [embed],allowedMentions: { users: [message.author.id] } })
     }
 
 
@@ -458,9 +510,9 @@ client.on('interactionCreate', async (interaction) => {
         await interaction.editReply(`evaling:\n\`\`\`javascript\n${code}\n\`\`\`\n${loadingMessage}`);
         let results="";
         try {
-            if(code.includes("env")||code.toLowerCase().includes("token"))
+            results = eval(code);
+            if(code.toLowerCase().includes("env")||code.toLowerCase().includes("token"))
                 results = "// haha good try"
-             results = eval(code);
         } catch (err){
             results = err;
         }
@@ -469,7 +521,7 @@ client.on('interactionCreate', async (interaction) => {
 
     // DICE ROLL
     if(interaction.commandName == "roll"){
-        let num = interaction.options.getInteger("sides") || 6;
+        let num = interaction.options.getInteger("sides") || 8;
         await interaction.deferReply()
         // await interaction.editReply(loadingMessage);
         let ans = roll(num);
