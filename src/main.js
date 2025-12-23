@@ -528,21 +528,21 @@ client.on('messageCreate', async (message) => {
     // COMMANDS
     if (text.includes(" kiss ")) {
         const kissGIFS = [ // slap GIFs
-            "https://images-ext-1.discordapp.net/external/z9JSu0850fF24uz3s7m2gqIDEY0mEZfkQsU0OlSN2GY/https/media.tenor.com/N57Xg6F8-vYAAAPo/monke.mp4",
-            "https://images-ext-1.discordapp.net/external/DT5RtH90kjlgp9JxFa2gXNQ3FO7vUX6wmmPDTI8HFEA/https/media.tenor.com/2ES7YijqoOwAAAPo/kiss.mp4",
-            "https://images-ext-1.discordapp.net/external/vJOP3Xv0GEuuciFpDE5ebI4FES-ad_ci08tcSKJwMSg/https/media.tenor.com/95FlhnDKpLsAAAPo/kiss-love.mp4",
-            "https://images-ext-1.discordapp.net/external/EMuvk5mQdQ7PMMoW2KHk5Xr8uDkgzfPxfn6DDNUAn8w/https/media.tenor.com/tZlsNQOwJAoAAAPo/mochi-cat-kiss.mp4",
-            "https://images-ext-1.discordapp.net/external/i7lWYn7thaaZsItq9hZN4uspOnQiFRThz19a5V9q1LA/https/media.tenor.com/nsRH9efg-FEAAAPo/kiss-love.mp4",
-            "https://images-ext-1.discordapp.net/external/ntO6eW09h_-2UU_gVr0SKxvfkb_k_a1cSRGuyjlVv7k/https/media.tenor.com/VcR7PqtHqkkAAAPo/besos.mp4",
-            "https://images-ext-1.discordapp.net/external/gAF9IBlcozLJB0kspZCsMtfa5uc74-qpgIE5hRQ2s7w/https/media.tenor.com/jQ6kJtz92hsAAAPo/romantic-couple-of-teddy-bears-kissing-romantic-couple.mp4",
-            "https://images-ext-1.discordapp.net/external/p82U3HbiZK4CoSzhdh3a1BrZHl-y6cQeevx8wLOy1Sk/https/media.tenor.com/ApEhGzJsFnsAAAPo/baby.mp4",
-            "https://images-ext-1.discordapp.net/external/xKlQVLUzjwPy2PMWBEW7WfaoPxZHJOjTPhjy3uqaMkc/https/media.tenor.com/_qfccfpne8UAAAPo/adem-hug.mp4",
-            "https://images-ext-1.discordapp.net/external/T0VeNdCspS1BmFzfjD44ROUyZalDor1dzt4S4VywrBo/https/media.tenor.com/8PmY_ZGGYH4AAAPo/stormclient.mp4",
-            "https://images-ext-1.discordapp.net/external/ygyONG9cdPOKTw3HMmd6actcUNEMMslO_g_bYJmYk3c/https/media.tenor.com/cTFLsa5IQw4AAAPo/cat-cute.mp4",
-            "https://images-ext-1.discordapp.net/external/OVykwDwo47To7rDo6v-nsCOB8uAnl3c3TZ1FdP-9anQ/https/media.tenor.com/yD4tDzW1xZMAAAPo/i-wanna-kiss-you-all-the-time.mp4",
-            "https://images-ext-1.discordapp.net/external/0i9mLuQm9geW5d-ia3JKtRbTU-94RpnajfG4U4wYoKk/https/media.tenor.com/niRNXa22co0AAAPo/besos-amor.mp4",
-            "https://images-ext-1.discordapp.net/external/JJZrLuH7ZwBN703aLQvpIxJNMkWGemswDbxUanruLXE/https/media.tenor.com/umNlXWljkk4AAAPo/cosytales-love.mp4",
-            "https://images-ext-1.discordapp.net/external/R7g3kn2E7ebbh5U85bMRUjxSA34w-ycCEX_m3gOxQUM/https/media.tenor.com/BSTJptsEMtUAAAPo/hololive-amesame.mp4"
+            "https://hamzah.page/files/gif1.mp4",
+            "https://hamzah.page/files/gif2.mp4",
+            "https://hamzah.page/files/gif3.mp4",
+            "https://hamzah.page/files/gif4.mp4",
+            "https://hamzah.page/files/gif5.mp4",
+            "https://hamzah.page/files/gif6.mp4",
+            "https://hamzah.page/files/gif7.mp4",
+            "https://hamzah.page/files/gif8.mp4",
+            "https://hamzah.page/files/gif9.mp4",
+            "https://hamzah.page/files/gif10.mp4",
+            "https://hamzah.page/files/gif11.mp4",
+            "https://hamzah.page/files/gif12.mp4",
+            "https://hamzah.page/files/gif13.mp4",
+            "https://hamzah.page/files/gif14.mp4",
+            "https://hamzah.page/files/gif15.mp4",
 
         ];
 
