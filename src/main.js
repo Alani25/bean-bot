@@ -564,6 +564,34 @@ client.on('messageCreate', async (message) => {
         return;
     }
 
+    // COMMANDS
+    if (text.includes("kill ")) {
+        const killGIFS = [ // slap GIFs
+            "https://media.discordapp.net/attachments/1405060654884196414/1453078132696551544/image0.gif",
+            "https://media.discordapp.net/attachments/1405060654884196414/1453078132994216119/image1.gif",
+            "https://media.discordapp.net/attachments/1405060654884196414/1453078133363183777/image2.gif",
+            "https://media.discordapp.net/attachments/1405060654884196414/1453078133891928135/image3.gif",
+            "https://media.discordapp.net/attachments/1405060654884196414/1453078134227341342/image4.gif",
+            "https://media.discordapp.net/attachments/1405060654884196414/1453078134961475715/image6.gif",
+            "https://media.discordapp.net/attachments/1405060654884196414/1453078135254945954/image7.gif",
+            "https://media.discordapp.net/attachments/1405060654884196414/1453078558254563421/image0.gif",
+            "https://media.discordapp.net/attachments/1405060654884196414/1453078558774923356/image1.gif",
+            "https://media.discordapp.net/attachments/1405060654884196414/1453078559265390692/image2.gif",
+            "https://media.discordapp.net/attachments/1405060654884196414/1453078559991140523/image3.gif"
+
+        ];
+
+        const gif = killGIFS[Math.floor(Math.random() * killGIFS.length)];
+        const embed = new EmbedBuilder()
+        .setTitle(`${user.displayName.toUpperCase()} KILLED ${text.split("kill")[1].toUpperCase()}`)
+        .setDescription("RIP 😔")
+        .setColor("#BC6105")
+        .setImage(gif)
+    
+        await message.channel.send({ embeds: [embed],allowedMentions: { users: [message.author.id] } })
+        return;
+    }
+
 
 })
 
