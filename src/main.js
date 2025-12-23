@@ -592,6 +592,32 @@ client.on('messageCreate', async (message) => {
         return;
     }
 
+    // COMMANDS
+    if (text.includes("hug ")) {
+        const hugGIFS = [ // slap GIFs
+            "https://media.discordapp.net/attachments/1405060654884196414/1453080252304719976/image0.gif",
+            "https://media.discordapp.net/attachments/1405060654884196414/1453080252673822740/image1.gif",
+            "https://media.discordapp.net/attachments/1405060654884196414/1453080253193912503/image2.gif",
+            "https://media.discordapp.net/attachments/1405060654884196414/1453080253558689853/image3.gif",
+            "https://media.discordapp.net/attachments/1405060654884196414/1453080254125183079/image4.gif",
+            "https://media.discordapp.net/attachments/1405060654884196414/1453080254561124422/image5.gif",
+            "https://media.discordapp.net/attachments/1405060654884196414/1453080254921969880/image6.gif",
+            "https://media.discordapp.net/attachments/1405060654884196414/1453080255312171181/image7.gif",
+            "https://media.discordapp.net/attachments/1405060654884196414/1453080448707199159/image0.gif"
+
+        ];
+
+        const gif = hugGIFS[Math.floor(Math.random() * hugGIFS.length)];
+        const embed = new EmbedBuilder()
+        .setTitle(`${user.displayName} hugs ${text.split("hug")[1]}`)
+        .setDescription("warm hugs :)")
+        .setColor("#BC6105")
+        .setImage(gif)
+    
+        await message.channel.send({ embeds: [embed],allowedMentions: { users: [message.author.id] } })
+        return;
+    }
+
 
 })
 
