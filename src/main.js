@@ -526,7 +526,7 @@ client.on('messageCreate', async (message) => {
     }
 
     // COMMANDS
-    if (text.includes(" kiss ")) {
+    if (text.split(" ")[0]==="kiss" && !text.includes("pante") && !text.includes("moose") && !text.includes("alani")) {
         const kissGIFS = [ // slap GIFs
             "https://hamzah.page/files/gif15.gif",
             "https://hamzah.page/files/gif3.gif",
