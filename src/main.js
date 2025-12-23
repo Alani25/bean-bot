@@ -528,21 +528,21 @@ client.on('messageCreate', async (message) => {
     // COMMANDS
     if (text.includes(" kiss ")) {
         const kissGIFS = [ // slap GIFs
-            "https://hamzah.page/files/gif1.mp4",
-            "https://hamzah.page/files/gif2.mp4",
-            "https://hamzah.page/files/gif3.mp4",
-            "https://hamzah.page/files/gif4.mp4",
-            "https://hamzah.page/files/gif5.mp4",
-            "https://hamzah.page/files/gif6.mp4",
-            "https://hamzah.page/files/gif7.mp4",
-            "https://hamzah.page/files/gif8.mp4",
-            "https://hamzah.page/files/gif9.mp4",
-            "https://hamzah.page/files/gif10.mp4",
-            "https://hamzah.page/files/gif11.mp4",
-            "https://hamzah.page/files/gif12.mp4",
-            "https://hamzah.page/files/gif13.mp4",
-            "https://hamzah.page/files/gif14.mp4",
-            "https://hamzah.page/files/gif15.mp4",
+            "https://hamzah.page/files/gif15.gif",
+            "https://hamzah.page/files/gif3.gif",
+            "https://hamzah.page/files/gif4.gif",
+            "https://hamzah.page/files/gif5.gif",
+            "https://hamzah.page/files/gif1.gif",
+            "https://hamzah.page/files/gif2.gif",
+            "https://hamzah.page/files/gif6.gif",
+            "https://hamzah.page/files/gif7.gif",
+            "https://hamzah.page/files/gif8.gif",
+            "https://hamzah.page/files/gif9.gif",
+            "https://hamzah.page/files/gif10.gif",
+            "https://hamzah.page/files/gif11.gif",
+            "https://hamzah.page/files/gif14.gif",
+            "https://hamzah.page/files/gif12.gif",
+            "https://hamzah.page/files/gif13.gif",
 
         ];
 
