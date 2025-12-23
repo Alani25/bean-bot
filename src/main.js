@@ -64,7 +64,7 @@ function writeFile(data, FILE){
 
 // quick functions, random num gen
 let roll = (num)=> num-Math.ceil(Math.random()*num)+1;
-let flipCoin = () => Math.random()>5?"heads":"tails";
+let flipCoin = () => Math.random()>0.5?"heads":"tails";
 
 
 
