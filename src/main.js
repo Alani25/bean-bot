@@ -49,6 +49,7 @@ const client = new Client({
 
 // saved file system
 const COMMANDS_FILE = "./storage/beangames-commands.json"
+const BRAIN_FILE = "./storage/brain.json"
 
 // read file
 function readFile(FILE) {
@@ -371,15 +372,52 @@ client.on('messageCreate', async (message) => {
     let send = (M) => message.channel.send(M);
     let user = message.author;
 
-    // tell admin/ moderators apart from regular members
-    const member = await message.guild.members.fetch(user.id)
-    const isAdmin = (member.permissions.has('Administrator') || member.permissions.has('ManageMessages'));
-    const roleHardRShame = message.guild.roles.cache.find(r => r.name.toLowerCase().includes("hard r"));
-
-
     // ignore if it's a message we send (no need for dog tail chase)
     if(message.author.id == "1450980085581746238")
         return;
+
+    // tell admin/ moderators apart from regular members
+    try{
+        await message.guild.members.fetch(user.id)
+    }catch(err){
+        console.warn(err);
+        return;
+    }
+    const member = await message.guild.members.fetch(user.id)
+    const isAdmin = (member.permissions.has('Administrator') || member.permissions.has('ManageMessages'));
+    const roleHardRShame = message.guild.roles.cache.find(r => r.name.toLowerCase().includes("hard r"));
+    const guildID = message.guild.id;
+    const channelID = message.channel.id;
+
+    // get all brain data right away
+    var brainData = await readFile(BRAIN_FILE);
+
+    // BINARY COUNTER
+    if(brainData[`g${guildID}`] && brainData[`g${guildID}`].channel == channelID){
+        var binaryCount = parseInt(text.replaceAll(" ",""), 2);
+        if(binaryCount){
+            if(binaryCount == brainData[`g${guildID}`].count+1){
+                brainData[`g${guildID}`].count += 1;
+                await writeFile(brainData,BRAIN_FILE); // <-- update brain data
+                message.react("✅");
+            }else{
+                message.react("❌");
+            }
+        }
+    }
+
+    // INIT BINARY COUNTING CHANNEL
+    if(text === "init binary counting"){
+        // const channelKey = `g${guildID}-c${channelID}`;
+        brainData[`g${guildID}`] = {channel: channelID, count: 0};
+        await writeFile(brainData,BRAIN_FILE); // <-- update brain data
+        send("✅ This channel has been set as the Binary Counting Channel!\nStart counting at 1 :D");
+        return;
+    }
+
+
+
+
 
     // await send(message.author.id);
     
