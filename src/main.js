@@ -626,7 +626,7 @@ client.on('messageCreate', async (message) => {
 
     // POOKIFICATION
     if(text.includes("pookify")){
-        const targetUser = message.mentions.users.first();
+        const targetUser = message.mentions.members.first();
         if (!targetUser) return; // tag someone bro
         // if someone is tagged... get their avatar
         const avatarURL = targetUser.displayAvatarURL({ extension: "png", size: 512 })
