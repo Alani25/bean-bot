@@ -623,6 +623,47 @@ client.on('messageCreate', async (message) => {
     }
 
 
+    // POOKIFICATION
+    if(text.includes("pookify")){
+        const targetUser = message.mentions.users.first();
+        if (!targetUser) return; // tag someone bro
+        // if someone is tagged... get their avatar
+        const avatarURL = targetUser.displayAvatarURL({ extension: "png", size: 512 })
+
+        const canvas = createCanvas(700, 700); // let's keep it square for now
+        const ctx = canvas.getContext("2d");
+
+        // Get the user's avatar
+        // Fetch the image from the URL to convert to PNG
+        const response = await fetch(avatarURL);
+        const buffer = await response.buffer();
+        console.log(buffer);
+        console.log("Image url: "+avatarURL);
+        // hope image automatically converts to png
+        const avatar = await loadImage(avatarURL);
+
+        // Draw the avatar on the canvas (positioning it at x: 50, y: 50, and resizing to 100x100)
+        ctx.drawImage(avatar, 0, 0, 700, 700); // 700/2 - 300/2 = x = 200
+
+        // const fileBuffer = fs.readFileSync(path.join(__dirname, "welcome.png"));
+        const overlayImage = await loadImage(`./assets/overlay/overlay${Math.ceil(Math.random()*11)}.png`);
+        ctx.drawImage(overlayImage, 0, 0, canvas.width, canvas.height);
+
+        const outsideImage = await loadImage(`./assets/outside/outside${Math.ceil(Math.random()*22)}.png`);
+        ctx.drawImage(outsideImage, 0, 0, canvas.width, canvas.height);
+
+        // Save the image as a file
+        const finalImage = canvas.toBuffer();
+        fs.writeFileSync("./pookied-image.png", finalImage);
+
+        // Send the image as an attachment
+        message.channel.send({
+            content: `${user} pookified ${targetUser} :3`,
+            files: ["./pookied-image.png"],
+        });
+
+    }
+
 })
 
 
