@@ -507,31 +507,35 @@ client.on('messageCreate', async (message) => {
 
     // COMMANDS
     if (text.includes("punch ")) {
-        const punchGIFS = [ // slap GIFs
-            "https://media.tenor.com/6a42QlkVsCEAAAAd/anime-punch.gif",
-            "https://media.tenor.com/gmvdv-e1EhcAAAAd/weliton-amogos.gif",
-            "https://media.tenor.com/UH8Jnl1W3CYAAAAd/anime-punch-anime.gif",
-            "https://media.tenor.com/p_mMicg1pgUAAAAd/anya-forger-damian-spy-x-family.gif",
-            "https://media.tenor.com/o8RbiF5-9dYAAAAd/killua-hxh.gif",
-            "https://media.tenor.com/ccdazTROjecAAAAd/one-punch-man-saitama.gif",
+        if(text.includes("niaria")){
+            send(`bro ${user} YOU'LL HAFTA GET PAST ME BEFORE U CAN LAY A FINGER ON NIARIA`);
+        }else{
+            const punchGIFS = [ // slap GIFs
+                "https://media.tenor.com/6a42QlkVsCEAAAAd/anime-punch.gif",
+                "https://media.tenor.com/gmvdv-e1EhcAAAAd/weliton-amogos.gif",
+                "https://media.tenor.com/UH8Jnl1W3CYAAAAd/anime-punch-anime.gif",
+                "https://media.tenor.com/p_mMicg1pgUAAAAd/anya-forger-damian-spy-x-family.gif",
+                "https://media.tenor.com/o8RbiF5-9dYAAAAd/killua-hxh.gif",
+                "https://media.tenor.com/ccdazTROjecAAAAd/one-punch-man-saitama.gif",
 
-        ];
+            ];
 
-        const gif = punchGIFS[Math.floor(Math.random() * punchGIFS.length)];
-        const embed = new EmbedBuilder()
-        .setTitle(`${user.displayName.toUpperCase()} PUNCHED ${text.split("punch")[1].toUpperCase()}`)
-        .setDescription("what did bro do to deserve this 🫣")
-        .setColor("#BC6105")
-        .setImage(gif)
-    
-        await message.channel.send({ embeds: [embed],allowedMentions: { users: [message.author.id] } })
+            const gif = punchGIFS[Math.floor(Math.random() * punchGIFS.length)];
+            const embed = new EmbedBuilder()
+            .setTitle(`${user.displayName.toUpperCase()} PUNCHED ${text.split("punch")[1].toUpperCase()}`)
+            .setDescription("what did bro do to deserve this 🫣")
+            .setColor("#BC6105")
+            .setImage(gif)
+        
+            await message.channel.send({ embeds: [embed],allowedMentions: { users: [message.author.id] } })
+        }
         return;
     }
 
     // COMMANDS
     if (text.split(" ")[0]==="kiss") {
         if(text.includes("pante") || text.includes("moose") || text.includes("alani") || text.includes("aydan") || text.includes("epic beans")){
-            send(`holdddup ${user} I won't let you kiss them, ${text.split(" ")[1].toUpperCase()} IS MINE`);
+            send(`holdddup ${user} I won't let you kiss them, ${text.split("kiss")[1].toUpperCase()} IS MINE`);
         }else{
             const kissGIFS = [ // slap GIFs
                 "https://hamzah.page/files/gif15.gif",
