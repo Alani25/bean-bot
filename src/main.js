@@ -29,6 +29,7 @@ const { ApplicationCommand } = require('discord.js');
 const { REST, Routes, ApplicationCommandOptionType, Application, Client, GatewayIntentBits, ActivityType, ActionRowBuilder, ButtonBuilder, ButtonStyle, StringSelectMenuBuilder, EmbedBuilder, quote, AttachmentBuilder } = require("discord.js");
 const cron = require("node-cron");
 const fs = require("fs");
+const { createCanvas, loadImage } = require("canvas");
 
 
 // global variables
