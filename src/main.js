@@ -453,6 +453,10 @@ client.on('messageCreate', async (message) => {
         return;
     }
 
+    if(text.includes("bean")){
+        message.react("🫘");
+    }
+
 
 
     // 
