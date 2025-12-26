@@ -378,14 +378,18 @@ client.on('messageCreate', async (message) => {
         return;
 
     // tell admin/ moderators apart from regular members
+
     try{
         await message.guild.members.fetch(user.id)
     }catch(err){
         console.warn(err);
         return;
     }
+    
     const member = await message.guild.members.fetch(user.id)
     const isAdmin = (member.permissions.has('Administrator') || member.permissions.has('ManageMessages'));
+    let mssgContent = `${message.content.split(":")[0]}:`;
+    
     const roleHardRShame = message.guild.roles.cache.find(r => r.name.toLowerCase().includes("hard r"));
     const guildID = message.guild.id;
     const channelID = message.channel.id;
@@ -414,6 +418,17 @@ client.on('messageCreate', async (message) => {
         await writeFile(brainData,BRAIN_FILE); // <-- update brain data
         send("✅ This channel has been set as the Binary Counting Channel!\nStart counting at 1 :D");
         return;
+    }
+    
+    
+    try{
+        if(text.split("say:")[0].length ===0 && isAdmin && mssgContent.trim()!==""){
+             send(message.content.replace(mssgContent,""));
+             await message.delete();
+             return;
+         }
+    }catch(err){
+        console.warn(`Error: ${err}`);
     }
 
 
@@ -453,14 +468,12 @@ client.on('messageCreate', async (message) => {
         return;
     }
 
+    
+    if(text.includes("love")){
+        message.react("❤️");
+    }
     if(text.includes("bean")){
         message.react("🫘");
-    }
-
-    if(isAdmin && text.split("say:")[0].length ===0){
-        send(message.content.replace(message.content.split(":")[0],""));
-        await message.delete();
-        return;
     }
 
 
@@ -645,11 +658,12 @@ client.on('messageCreate', async (message) => {
         const ctx = canvas.getContext("2d");
 
         // Get the user's avatar
-        // Fetch the image from the URL to convert to PNG
-        const response = await fetch(avatarURL);
-        const buffer = await response.buffer();
-        console.log(buffer);
-        console.log("Image url: "+avatarURL);
+        // // Fetch the image from the URL to convert to PNG
+        // const response = await fetch(avatarURL);
+        // const buffer = await response.buffer();
+        // console.log(buffer);
+        // console.log("Image url: "+avatarURL);
+        
         // hope image automatically converts to png
         const avatar = await loadImage(avatarURL);
 
