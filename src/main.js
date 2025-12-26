@@ -388,7 +388,6 @@ client.on('messageCreate', async (message) => {
     
     const member = await message.guild.members.fetch(user.id)
     const isAdmin = (member.permissions.has('Administrator') || member.permissions.has('ManageMessages'));
-    let mssgContent = `${message.content.split(":")[0]}:`;
     
     const roleHardRShame = message.guild.roles.cache.find(r => r.name.toLowerCase().includes("hard r"));
     const guildID = message.guild.id;
@@ -422,9 +421,10 @@ client.on('messageCreate', async (message) => {
     
     
     try{
-        if(text.split("say:")[0].length ===0 && isAdmin && mssgContent.trim()!==""){
-             send(message.content.replace(mssgContent,""));
-             await message.delete();
+        let mssgContent = `${message.content.split(":")[0]}:`;
+        if(text.split("say:")[0].length ===0 && isAdmin && mssgContent.replaceAll(" ","")!==""){
+            // await message.delete();
+            send(message.content.replace(mssgContent,""));
              return;
          }
     }catch(err){
