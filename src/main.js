@@ -457,6 +457,12 @@ client.on('messageCreate', async (message) => {
         message.react("🫘");
     }
 
+    if(isAdmin && text.split("say:")[0].length ===0){
+        send(message.content.replace(message.content.split(":")[0],""));
+        await message.delete();
+        return;
+    }
+
 
 
     // 
